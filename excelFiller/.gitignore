@@ -1,0 +1,12 @@
+# Ignore Excel files
+*.xls
+*.xlsx
+*.xlsm
+*.xlsb
+*.xltx
+*.xltm
+
+# Ignore Python temporary files
+*.pyc
+*.pyo
+__pycache__/
