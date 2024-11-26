@@ -1,4 +1,5 @@
 const puppeteer = require("puppeteer");
+const XLSX = require("xlsx");
 
 (async () => {
   // Initiate the browser
@@ -15,51 +16,57 @@ const puppeteer = require("puppeteer");
 
   // Evaluate functions in the page context
   const eventDetails = await page.evaluate(() => {
-    // Function to extract content from divs with class "mb-3" and attribute xs="12"
-    const extractH5Content = () => {
+    // Function to extract event details from divs with class "mb-3" and attribute xs="12"
+    const extractEventDetails = () => {
       return Array.from(document.querySelectorAll('div.mb-3[xs="12"]'))
         .map((div) => {
           const h5 = div.querySelector("h5");
-          return h5 ? h5.textContent.trim() : null;
+          const header = h5 ? h5.textContent.trim() : null;
+
+          const timeDiv = div.querySelector("div.caps-md.text-secondary.mb-2");
+          const time = timeDiv ? timeDiv.textContent.trim() : null;
+
+          const costH6 = div.querySelector("h6.mb-0.mt-2");
+          const cost = costH6 ? costH6.textContent.trim() : null;
+
+          const addressDiv = div.querySelector("div.small.text-muted.mb-2");
+          let address = null;
+          if (addressDiv) {
+            const addressLink = addressDiv.querySelector("a");
+            const addressButton = addressDiv.querySelector("button");
+            if (addressLink) {
+              // Remove the span that says "(opens in a new tab)"
+              const span = addressLink.querySelector("span");
+              if (span && span.textContent.includes("opens in a new tab")) {
+                span.remove();
+              }
+              // Get the cleaned address text
+              address = addressLink.innerHTML
+                .replace(/<span.*<\/span>/, "")
+                .trim();
+            } else if (addressButton) {
+              address = addressButton.textContent.trim();
+            }
+          }
+
+          return {
+            header,
+            time,
+            cost,
+            address,
+          };
         })
-        .filter((content) => content !== null);
+        .filter((event) => event.header !== null);
     };
 
-    // Function to extract content from divs with class "caps-md text-secondary mb-2"
-    const extractSecondaryContent = () => {
-      return Array.from(
-        document.querySelectorAll("div.caps-md.text-secondary.mb-2")
-      )
-        .map((div) => div.textContent.trim())
-        .filter((content) => content !== null);
-    };
-
-    // Function to extract content from h6 elements with class "mb-0 mt-2"
-    const extractCostContent = () => {
-      return Array.from(document.querySelectorAll("h6.mb-0.mt-2"))
-        .map((h6) => h6.textContent.trim())
-        .filter((content) => content !== null);
-    };
-
-    const h5Content = extractH5Content();
-    const secondaryContent = extractSecondaryContent();
-    const costContent = extractCostContent();
-
-    // Combine the extracted content into a single array of objects
-    const eventDetails = h5Content.map((h5, index) => ({
-      h5Content: h5,
-      secondaryContent: secondaryContent[index] || "",
-      costContent: costContent[index] || "",
-    }));
-
-    return eventDetails;
+    return extractEventDetails();
   });
 
   // Print each event's details on a single line
   eventDetails.forEach((event, index) => {
     console.log(
-      `Event ${index + 1}: ${event.h5Content} | ${event.secondaryContent} | ${
-        event.costContent
+      `Event ${index + 1}: ${event.header} | ${event.time} | ${event.cost} | ${
+        event.address
       }`
     );
   });
