@@ -47,3 +47,7 @@ Thumbs.db
 
 # Local environment files
 .env*
+
+# Ignore Excel files
+*.xls
+*.xlsx
