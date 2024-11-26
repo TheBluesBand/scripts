@@ -2,7 +2,7 @@
 TIME_IDS = [f'T{i}' for i in range(1, 10)]
 
 # List of TeamIDs
-TEAM_IDS = [f'TM{i}' for i in range(1, 8)]
+TEAM_IDS = [f'TM{i}' for i in range(1, 7)]
 
 # List of AreaIDs
 AREA_IDS = [f'AR{i}' for i in range(1, 5)]
