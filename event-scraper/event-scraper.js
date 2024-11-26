@@ -21,7 +21,9 @@ const XLSX = require("xlsx");
       return Array.from(document.querySelectorAll('div.mb-3[xs="12"]'))
         .map((div) => {
           const h5 = div.querySelector("h5");
-          const header = h5 ? h5.textContent.trim() : null;
+          const headerLink = h5 ? h5.querySelector("a") : null;
+          const header = headerLink ? headerLink.textContent.trim() : null;
+          const link = headerLink ? headerLink.href : null;
 
           const timeDiv = div.querySelector("div.caps-md.text-secondary.mb-2");
           const time = timeDiv ? timeDiv.textContent.trim() : null;
@@ -51,6 +53,7 @@ const XLSX = require("xlsx");
 
           return {
             header,
+            link,
             time,
             cost,
             address,
@@ -65,12 +68,13 @@ const XLSX = require("xlsx");
   // Create a new workbook and add the event details to a worksheet
   const workbook = XLSX.utils.book_new();
   const worksheetData = [
-    ["Header", "Time", "Cost", "Address"],
+    ["Header", "Time", "Cost", "Address", "Link"],
     ...eventDetails.map((event) => [
       event.header,
       event.time,
       event.cost,
       event.address,
+      event.link,
     ]),
   ];
   const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
