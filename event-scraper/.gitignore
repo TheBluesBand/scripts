@@ -1,0 +1,49 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Editor files (Please adjust to your specific editor)
+.idea/
+*.iml
+.vscode/
+*.suo
+*.ntvs*
+*.ncb*
+*.sdf*
+*.suo
+*.user
+*.sln
+*.opensdf
+*.VC.db*
+*.opendb*
+*.VC.db*
+*.pdb*
+*.suo
+*.opensdf
+*.VC.db*
+*.opendb*
+*.VC.db*
+*.pdb*
+*.suo
+*.opensdf
+*.VC.db*
+*.opendb*
+*.VC.db*
+*.pdb*
+
+# Testing files
+/coverage/
+/test-results/
+
+# Build files
+/build/
+/dist/
+
+# Local environment files
+.env*
