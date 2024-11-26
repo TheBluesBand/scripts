@@ -62,14 +62,24 @@ const XLSX = require("xlsx");
     return extractEventDetails();
   });
 
-  // Print each event's details on a single line
-  eventDetails.forEach((event, index) => {
-    console.log(
-      `Event ${index + 1}: ${event.header} | ${event.time} | ${event.cost} | ${
-        event.address
-      }`
-    );
-  });
+  // Create a new workbook and add the event details to a worksheet
+  const workbook = XLSX.utils.book_new();
+  const worksheetData = [
+    ["Header", "Time", "Cost", "Address"],
+    ...eventDetails.map((event) => [
+      event.header,
+      event.time,
+      event.cost,
+      event.address,
+    ]),
+  ];
+  const worksheet = XLSX.utils.aoa_to_sheet(worksheetData);
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Events");
+
+  // Write the workbook to a file
+  XLSX.writeFile(workbook, "event-details.xlsx");
+
+  console.log("Event details exported to event-details.xlsx");
 
   await browser.close();
 })();
