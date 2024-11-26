@@ -47,17 +47,17 @@ def generate_metric_facts_data(time_ids, team_ids):
         team_ids (list): List of TeamIDs.
 
     Returns:
-        dict: A dictionary containing the generated data with keys 'Entry', 'MetricID', 'TimeID', 'TeamID', 'Value', 'Score', and 'WeightedScore'.
+        dict: A dictionary containing the generated data with keys 'Entry', 'MetricID', 'TimeID', 'TeamID', 'Value', and 'Score'.
     """
 
     # Initialize lists to store the data
     entry_ids = []          # List of EntryIDs
-    metric_ids = []          # List of MetricIDs
-    time_ids = []          # List of TimeIDs
-    team_ids = []          # List of TeamIDs
-    values = []    # List of Values
-    scores = []         # List of Scores
-    weighted_scores = []         # List of Weight
+    metric_ids = []         # List of MetricIDs
+    time_ids = []           # List of TimeIDs
+    team_ids = []           # List of TeamIDs
+    value = []             # List of Weights
+    scores = []             # List of Values
+    weight = []             # List of Scores
 
     for time_id in time_ids:
         for team_id in team_ids:
@@ -66,9 +66,9 @@ def generate_metric_facts_data(time_ids, team_ids):
                 metric_ids.append(metric_id)
                 time_ids.append(time_id)
                 team_ids.append(team_id)
-                values.append(random.randint(0, 100))
-                scores.append(random.randint(0, 10))
-                weighted_scores.append(random.randint(0, 10))
+                value.append(random.uniform(0.1, 12.0))
+                scores.append(random.randint(1, 3))
+                weight.append(random.randint(2, 10))
 
     # Return the generated data as a dictionary
     return {
@@ -76,7 +76,7 @@ def generate_metric_facts_data(time_ids, team_ids):
         'MetricID': metric_ids,
         'TimeID': time_ids,
         'TeamID': team_ids,
-        'Value': values,
+        'Value': value,
         'Score': scores,
-        'WeightedScore': weighted_scores,
+        'Weight': weight,
     }
