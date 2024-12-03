@@ -1,12 +1,9 @@
 import pandas as pd
 import logging
-from generate_data import generate_area_facts_data
-from constants import TIME_IDS, TEAM_IDS, AREA_IDS
-from export_excel import export_to_excel
 
+from generate_data import generate_time_dim
 
-
-def main(time_ids, team_ids, area_ids, output_file):
+def main(output_file):
     """
     Main function to generate data and export it to an Excel file.
 
@@ -19,8 +16,14 @@ def main(time_ids, team_ids, area_ids, output_file):
     Returns:
         None
     """
+    from generate_data import generate_metric_facts_data
+    from export_excel import export_to_excel
     # Generate the data
-    data = generate_area_facts_data(time_ids, team_ids, area_ids)
+
+    #data = generate_area_facts_data(time_ids, team_ids, area_ids)
+    data = generate_metric_facts_data()
+    #data = generate_time_dim(2024)
+
     # Export the generated data to an Excel file
     export_to_excel(data, output_file)
 
@@ -30,4 +33,4 @@ if __name__ == "__main__":
     output_file = 'output.xlsx'
 
     # Run the main function with the specified parameters
-    main(TIME_IDS, TEAM_IDS, AREA_IDS, output_file)
+    main(output_file)

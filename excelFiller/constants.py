@@ -1,5 +1,5 @@
 # List of TimeIDs
-TIME_IDS = [f'T{i}' for i in range(1, 10)]
+TIME_IDS = [f'T{i}' for i in range(1, 367)]
 
 # List of TeamIDs
 TEAM_IDS = [f'TM{i}' for i in range(1, 7)]
