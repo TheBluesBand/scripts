@@ -1,9 +1,9 @@
 import random
 
-from constants import METRIC_IDS, TEAM_IDS, TIME_IDS
+from constants import AREA_IDS, METRIC_IDS, TEAM_IDS, TIME_IDS
 from datetime import datetime, timedelta
 
-def generate_area_facts_data(time_ids, team_ids, area_ids):
+def generate_area_facts_data():
     """
     Generate mock data for area facts.
 
@@ -23,9 +23,9 @@ def generate_area_facts_data(time_ids, team_ids, area_ids):
     max_scores = []         # List of max scores
 
     # Generate data by iterating through each combination of time, team, and area
-    for time_id in time_ids:
-        for team_id in team_ids:
-            for area_id in area_ids:
+    for time_id in TIME_IDS:
+        for team_id in TEAM_IDS:
+            for area_id in AREA_IDS:
                 area_list.append(area_id)
                 time_list.append(time_id)
                 team_list.append(team_id)
